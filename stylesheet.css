@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #5F6063
+}
+
+h1 {
+    color: #5F6063;
+}
+
+#logo {
+    height: 25px;
+    width: 25px;
+    padding-right: 0.75rem;
+}
+
+#logotxt {
+    display: flex;
+    align-items: center;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+}
