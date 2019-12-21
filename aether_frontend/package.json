@@ -30,6 +30,7 @@
     "protoc": "^1.0.3",
     "protoc-gen-grpc-web": "^1.0.5",
     "react": "^16.2.0",
+    "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.3.1",
     "webpack": "^4.41.2"
   },
