@@ -11,7 +11,8 @@ module.exports = {
     devServer: {
         publicPath: '/build/',
         //If proxy is needed 
-        // proxy: {'/': 'http://localhost:3000'}
+        proxy: {'/': 'http://localhost:3000',
+                '/assets/': 'http://localhost:3000'}
     },
     module: {
         rules: [
