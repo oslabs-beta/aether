@@ -25,7 +25,7 @@ message MemorySnapShotStats {
   double gcIncrementalMarkingTime = 6;
   double gcProcessWeakCallbacksCount = 7;
   double gcProcessWeakCallbacksTime = 8;
-  double total_heap_size = 9; 
+  double totalheapsize = 9; 
   double total_heap_size_executable = 10;
   double total_physical_size = 11; 
   double total_available_size = 12;
