@@ -3,23 +3,16 @@ const memwatch = require('@airbnb/node-memwatch');
 const { MemorySnapShotsMicroservice } = require('../proto/package.js');
 
 const Stub = new MemorySnapShotsMicroservice(
-  // binds it to the Server address
   'localhost: 9000',
-  // defines the security level
   credentials.createInsecure(),
 );
 
-// RPC invocations
-/* the Stub has every RPC method, each of which, when invoked, returns an EventEmitter
-with the ability to write messages to the server at the bound address - in this case,
-‘localhost: 3000’ - and listen for returned messages from that server. Also in this case,
-it is a bidirectional EventEmitter, able to both listen and write continuously. */
+
 const bidiClientEventEmitter = Stub.TakeSnapShot();
 // Let’s initialize some mutable variables
 
 const heapDataFunc = memwatch.on('stats', (heapData) => {
   // console.log('THE HEAP DATA IS', stats);
-  // console.log(stats);
   bidiClientEventEmitter.write(
     // properties match the message fields for benchmark
     {
@@ -67,18 +60,10 @@ memwatch.gc();
 //   peak_malloced_memory: 0,
 //   gc_time: 0,
 // });
+
 // adds a listener for metadata - metadata is sent only once at the beginning of a channel
 //   bidiClientEventEmitter.on( 'metadata', metadata => {
-//     // highly accurate Node.process nanosecond timer converted to an integer with Number()
-//     // start = Number(process.hrtime.bigint());
-//     // returns the special metadata object as an Object
 //     // console.log(metadata.getMap())
 //   })
 // adds a listener for errors
 bidiClientEventEmitter.on('error', (err) => console.error(err));
-/* adds listener for message data, the benchmark message received is passed to the callback,
-  and the callback is run on every message received */
-// bidiClientEventEmitter.on('data', (heapData) => {
-// writes a message to Server
-
-// });
