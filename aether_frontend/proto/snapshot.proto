@@ -1,20 +1,14 @@
-// proto/exampleAPI.proto
 syntax = "proto3";
 // define the name of the package
 package snapshot;
-// define the name of the service(s)
 
-// define the name of the message(s)
 
 service MemorySnapShotsMicroservice {
 //would not be bidirectional in our app
   rpc TakeSnapShot (stream MemorySnapShotStats) returns (stream MemorySnapShotStats);
 }
 
-// service HeapDifferenceMicroservice {
-//   //would not be bidirectional in our app
-//     rpc (stream HeapDifference) returns (stream HeapDifference);
-//   }
+
 
 message MemorySnapShotStats {
   double gcScavengeCount = 1;
@@ -35,48 +29,3 @@ message MemorySnapShotStats {
   double peak_malloced_memory = 16;
   double gc_time = 17;
 }
-
-// message HeapDifference {
-//   message Before {
-//     message BeforeData {
-//       double nodes = 1;
-//       double size_bytes = 2;
-//       double size = 3;
-//     }
-//   }
-//   message After {
-//     message AfterData {
-//       double nodes = 1;
-//       double size_bytes = 2;
-//       double size = 3;
-//     }
-//   }
-//   message Change {
-//     message ChangeData {
-//       double size_bytes = 1;
-//       double size = 2;
-//       double freed_nodes = 3;
-//       double allocated_nodes = 4;
-//     }
-//   }
-//   message Details {
-//     message DetailsArray{
-//       message DetailsObject {
-//         //this would return various strings I.E. STRING/ARRAY/LEAKING CLASS
-//         string what = 1;  
-//         string size_bytes = 2;
-//         string size = 3; 
-//         string add = 4;
-//         string minus = 5;
-//       }
-//       repeated DetailsObject = 1;
-//     }
-//   }
-// }
-
-
-/* 
-In our example, the RPC method BidiMath is fully bidirectional. 
-The Benchmark message will be an Object with the properties `requests` and `responses`. 
-The values of `requests` and `responses` will be `doubles`, or potentially very large numbers.
-*/

@@ -1,4 +1,3 @@
-// proto/package.js
 const { loadSync } = require('@grpc/proto-loader');
 const { loadPackageDefinition } = require( 'grpc' );
  
