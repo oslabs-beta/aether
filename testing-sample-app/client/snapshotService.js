@@ -9,7 +9,6 @@ const Stub = new MemorySnapShotsMicroservice(
 
 
 const bidiClientEventEmitter = Stub.TakeSnapShot();
-// Let’s initialize some mutable variables
 
 const heapDataFunc = memwatch.on('stats', (heapData) => {
   // console.log('THE HEAP DATA IS', stats);
@@ -40,30 +39,9 @@ const heapDataFunc = memwatch.on('stats', (heapData) => {
 
 // trigger the garbage collection
 memwatch.gc();
-// Client must write the first message to the server
-// bidiClientEventEmitter.write({
-//   gcScavengeCount: 1,
-//   gcScavengeTime: 0,
-//   gcMarkSweepCompactCount: 0,
-//   gcMarkSweepCompactTime: 0,
-//   gcIncrementalMarkingCount: 0,
-//   gcIncrementalMarkingTime: 0,
-//   gcProcessWeakCallbacksCount: 0,
-//   gcProcessWeakCallbacksTime: 0,
-//   totalheapsize: 0,
-//   total_heap_size_executable: 0,
-//   total_physical_size: 0,
-//   total_available_size: 0,
-//   used_heap_size: 0,
-//   heap_size_limit: 0,
-//   malloced_memory: 0,
-//   peak_malloced_memory: 0,
-//   gc_time: 0,
-// });
 
-// adds a listener for metadata - metadata is sent only once at the beginning of a channel
+
 //   bidiClientEventEmitter.on( 'metadata', metadata => {
 //     // console.log(metadata.getMap())
 //   })
-// adds a listener for errors
 bidiClientEventEmitter.on('error', (err) => console.error(err));
