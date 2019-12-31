@@ -17,45 +17,9 @@ it is a bidirectional EventEmitter, able to both listen and write continuously. 
 const bidiClientEventEmitter = Stub.TakeSnapShot();
 // Let’s initialize some mutable variables
 
-const heapData = memwatch.on('stats', (stats) => {
-  console.log('THE HEAP DATA IS', stats);
-  return stats;
-});
-// trigger the garbage collection
-memwatch.gc();
-// Client must write the first message to the server
-bidiClientEventEmitter.write({
-  gcScavengeCount: 1,
-  gcScavengeTime: 0,
-  gcMarkSweepCompactCount: 0,
-  gcMarkSweepCompactTime: 0,
-  gcIncrementalMarkingCount: 0,
-  gcIncrementalMarkingTime: 0,
-  gcProcessWeakCallbacksCount: 0,
-  gcProcessWeakCallbacksTime: 0,
-  totalheapsize: 0,
-  total_heap_size_executable: 0,
-  total_physical_size: 0,
-  total_available_size: 0,
-  used_heap_size: 0,
-  heap_size_limit: 0,
-  malloced_memory: 0,
-  peak_malloced_memory: 0,
-  gc_time: 0,
-});
-// adds a listener for metadata - metadata is sent only once at the beginning of a channel
-//   bidiClientEventEmitter.on( 'metadata', metadata => {
-//     // highly accurate Node.process nanosecond timer converted to an integer with Number()
-//     // start = Number(process.hrtime.bigint());
-//     // returns the special metadata object as an Object
-//     // console.log(metadata.getMap())
-//   })
-// adds a listener for errors
-bidiClientEventEmitter.on('error', (err) => console.error(err));
-/* adds listener for message data, the benchmark message received is passed to the callback,
-  and the callback is run on every message received */
-bidiClientEventEmitter.on('data', (heapData) => {
-  // writes a message to Server
+const heapDataFunc = memwatch.on('stats', (heapData) => {
+  // console.log('THE HEAP DATA IS', stats);
+  // console.log(stats);
   bidiClientEventEmitter.write(
     // properties match the message fields for benchmark
     {
@@ -78,4 +42,43 @@ bidiClientEventEmitter.on('data', (heapData) => {
       gc_time: heapData.gc_time,
     },
   );
+  // return stats;
 });
+
+// trigger the garbage collection
+memwatch.gc();
+// Client must write the first message to the server
+// bidiClientEventEmitter.write({
+//   gcScavengeCount: 1,
+//   gcScavengeTime: 0,
+//   gcMarkSweepCompactCount: 0,
+//   gcMarkSweepCompactTime: 0,
+//   gcIncrementalMarkingCount: 0,
+//   gcIncrementalMarkingTime: 0,
+//   gcProcessWeakCallbacksCount: 0,
+//   gcProcessWeakCallbacksTime: 0,
+//   totalheapsize: 0,
+//   total_heap_size_executable: 0,
+//   total_physical_size: 0,
+//   total_available_size: 0,
+//   used_heap_size: 0,
+//   heap_size_limit: 0,
+//   malloced_memory: 0,
+//   peak_malloced_memory: 0,
+//   gc_time: 0,
+// });
+// adds a listener for metadata - metadata is sent only once at the beginning of a channel
+//   bidiClientEventEmitter.on( 'metadata', metadata => {
+//     // highly accurate Node.process nanosecond timer converted to an integer with Number()
+//     // start = Number(process.hrtime.bigint());
+//     // returns the special metadata object as an Object
+//     // console.log(metadata.getMap())
+//   })
+// adds a listener for errors
+bidiClientEventEmitter.on('error', (err) => console.error(err));
+/* adds listener for message data, the benchmark message received is passed to the callback,
+  and the callback is run on every message received */
+// bidiClientEventEmitter.on('data', (heapData) => {
+// writes a message to Server
+
+// });
