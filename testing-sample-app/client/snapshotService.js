@@ -7,7 +7,6 @@ const Stub = new MemorySnapShotsMicroservice(
   credentials.createInsecure(),
 );
 
-
 const bidiClientEventEmitter = Stub.TakeSnapShot();
 
 const heapDataFunc = memwatch.on('stats', (heapData) => {

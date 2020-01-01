@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server/gRPCServer.js",
     "build": "NODE_ENV=production webpack",
+    "aether": "NODE_ENV=production node server/server.js",
     "dev": "NODE_ENV=development webpack-dev-server --open --hot & node server/server.js"
   },
   "repository": {
