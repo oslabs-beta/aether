@@ -2,7 +2,7 @@
 const { loadSync } = require('@grpc/proto-loader');
 const { loadPackageDefinition } = require( 'grpc' );
  
-const PROTO_PATH = __dirname + '/snapshot.proto'
+const PROTO_PATH = __dirname + '/snapshot.proto';
 
 const CONFIG_OBJECT = {
   longs: Number, 
