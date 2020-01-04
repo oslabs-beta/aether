@@ -1,17 +1,18 @@
-const path = require('path')
+const path = require('path');
 const express = require('express');
+
 const app = express();
 const PORT = 3000;
-const grpc = require('grpc');
 
-app.use(express.static(path.resolve(__dirname, '../client')))
+
+app.use(express.static(path.resolve(__dirname, '../client')));
 
 app.get('/', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, '../index.html'))
-})
+  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+});
 
 app.get('/client/styles.css', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, '../client/styles.css'))
-})
+  res.status(200).sendFile(path.resolve(__dirname, '../client/styles.css'));
+});
 
-app.listen(PORT, console.log(`Listening servewr on ${PORT}`))
+app.listen(PORT, console.log(`Listening servewr on ${PORT}`));
