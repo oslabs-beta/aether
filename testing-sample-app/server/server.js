@@ -1,18 +1,49 @@
+const heapdump = require('heapdump');
+const fs = require('fs');
 const path = require('path');
-const express = require('express');
+const parser = require('heapsnapshot-parser');
 
-const app = express();
-const PORT = 3000;
+function takeSnapShot(input) {
+  // snapshot folder must ALREADY EXIST in order to save snapshots there
+  const filename = `../snapshot/${Date.now()}.heapsnapshot`;
+  console.log('Filename: ', filename);
+  heapdump.writeSnapshot(path.resolve(__dirname, filename), function(
+    err,
+    filename
+  ) {
+    const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
+    const snapshot = parser.parse(snapshotFile);
+    const parsedSnapShot = [];
 
+    for (let i = 0; i < 5; i++) {
+      const node = snapshot.nodes[i];
+      parsedSnapShot.push({
+        Type: node.type,
+        Name: node.name,
+        ID: node.id,
+        self_size: node.self_size,
+        edge_count: node.edge_count
+      });
+    }
+    // res.locals.parsedSnapShot = parsedSnapShot;
+    console.log(parsedSnapShot);
+    input.input = JSON.stringify(parsedSnapShot);
 
-app.use(express.static(path.resolve(__dirname, '../client')));
+    // next();
+  });
+}
+const io = require('socket.io-client');
 
-app.get('/', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+const socket = io.connect('http://localhost:3000/', {
+  reconnection: true
 });
 
-app.get('/client/styles.css', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../client/styles.css'));
+socket.on('connect', function() {
+  const newData = {};
+  takeSnapShot(newData);
+  console.log('connected to localhost:3000');
+  socket.on('clientEvent', function(data) {
+    console.log('message from the server:', data);
+    socket.emit('serverEvent', `thanks server! for sending ${newData.input}`);
+  });
 });
-
-app.listen(PORT, console.log(`Listening servewr on ${PORT}`));
