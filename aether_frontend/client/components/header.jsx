@@ -6,8 +6,7 @@ function Header() {
         <div id="header">
             <h1>Memory Report</h1>
             <div id="logotxt">
-                <img id="logo" src="/assets/4ele.png" />
-                <p>aether</p>
+                <img id="logo" src="/assets/AetherLogo01.png" alt="Aether Logo"/>
             </div>
         </div>
     )
