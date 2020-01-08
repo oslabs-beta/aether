@@ -1,51 +1,30 @@
-// const express = require('express');
-
-// const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-
+//ESTABLISH THE PORT NUMBER DYNAMICALLY TO COMMUNICATE AT 3000 
 const port = 3000;
-// const memwatch = require('@airbnb/node-memwatch')
+//Add Socket.IO as a dependency and require/instantiate it in your server 
+//defined as 'io' with the port  as an argument. 
+const io = require('socket.io').listen(port);
 
-const io = require('socket.io').listen(3000);
+/* The first thing needing to be handled is listening for a new connection from the client. 
+  The on keyword does just that- listen for a specific event. 
+  It requires 2 arguments: a string containing the title of the event thats emitted, and a function with which the data is passed though. 
+  In the case of our connection listener, we use socket to define the data in the second argument. 
+  A socket is an individual client who is connected.
+  For listening for connections on our server
+*/
 
-io.on('connection', function(socket) {
+io.on('connection', socket => {
   console.log('connected:', socket.client.id);
   socket.on('serverEvent', function(data) {
     console.log('new message from client:', data);
   });
+  //
   setInterval(function() {
+    //EMIT THE MESSAGE BEING SENT TO THE SERVER 
+    //Emits an event to the socket identified by the string name. Any other parameters can be included. All serializable datastructures are supported, including Buffer.
     socket.emit('clientEvent', Math.random());
     console.log('message sent to the clients');
   }, 3000);
 });
 
-// app.use(express.static('/assets/'));
-
-// app.get('/getdata', (req, res) => {
-//     // console.log('Getting stats');
-//     let statsToSend = [];
-//     memwatch.on('stats', function(stats) {
-//         statsToSend.push(stats);
-//         // console.log('Inside', statsToSend)})
-//     memwatch.gc()
-//     // ! This console log is printing before the 'Inside' console logs
-//     // ! Need to break these out into controllers to deal with possible async problems?
-//     // console.log("Locals", statsToSend);
-//     res.status(200).send(statsToSend)
-//     })
-// })
-
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../index.html'));
-// });
-
-// app.get('/build/bundle.js', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../build/bundle.js'));
-// });
-// app.get('/stylesheet.css', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../stylesheet.css'));
-// });
-
-
-// app.listen(port, () => console.log('Listening on port:', port));
