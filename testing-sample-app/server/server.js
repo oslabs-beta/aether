@@ -10,6 +10,12 @@ const socket = io.connect('http://localhost:3000/', {
 });
 
 function takeSnapShot(input) {
+  /* THE ORIGINAL FUCNTION'S MIDDLEWARE AHS BEEN REFACTORED TO NOW TAKE IN AN INPUT THAT IS AN OBJECT
+  IF WE PASS IN INPUT AS AN OBJECT AND GIVE IT A PROPERTY 
+  WE PASS IT BY REFERENCE AND HENCE IT EXISTS OUTSIDE OF THE FUNCTION
+  OTHERWISE IT WOULD NOT PERSIST AND BE UNDEFINED
+  */
+
   const filename = `../snapshot/${Date.now()}.heapsnapshot`;
   console.log('Filename: ', filename);
   heapdump.writeSnapshot(path.resolve(__dirname, filename), function(
@@ -38,16 +44,28 @@ function takeSnapShot(input) {
   });
 }
 
-//ESTABLISHES A CONNECTION 
+// ESTABLISHES AND CONNECT ON YOUR SOCKET CONNECTION
+// JUST BEFORE THE CONNECTION IS ESTABLISHED HERE, IO.ON HAS BEEN TRIGGERED ON AETHER'S SERVER -- 33
 socket.on('connect', function() {
-  //CREATE EMPTY CONTAINER OBJECT
+  /*
+  WE CREATED AN EMPTY CONTAINER OBJECT THAT WILL HOLD OUR PARSEDSNAPSHOT DATA.
+  IF WE SIMPLY USED A VARIABLE -- THEN THE VARIABLE WOULD NOT EXIST OUTSIDE THE FUNCTION'S EXECUTION CONTEXT
+  BY USING AN OBJECT, IT LIVES IN THE HEAP AND PERSISTS THE DATA ON BY ASSIGNING A PROPERTY ONTO THAT OBJECT
+  */
+
   const newData = {};
   takeSnapShot(newData);
   console.log('connected to localhost:3000');
+  //NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO 
+
+  //TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
+  // AND THIS EVENT LISTENER HAS A CALLBACK FUNCTION
   socket.on('clientEvent', function(data) {
     console.log('message from the server:', data);
-    // Emits an event to all connected clients. The following two are equivalent:
-    // Emits an event to the socket identified by the string name. Any other parameters can be included. All serializable datastructures are supported, including Buffer.
-    socket.emit('serverEvent', `thanks server! for sending ${newData.input}`);
+    // AN EVENT IS EMITTED TO ALL CONNECTED CLIENTS -- CLIENTS CAN IDENTIFY THE EVENT BY THE INPUT STRING
+
+    // ONCE WE'VE FOUND THE PARTICULAR EVENT WE WANTED TO CONNECT WE BROADCAST THAT EVENBT TO ANYONE ELSE 
+    // USING OUR SOCKET CONNECTION AND LISTENING TO THE SAME EVENT
+    socket.emit('serverEvent', newData.input);
   });
 });

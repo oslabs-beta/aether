@@ -1,30 +1,73 @@
+const express = require('express');
+const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-//ESTABLISH THE PORT NUMBER DYNAMICALLY TO COMMUNICATE AT 3000 
 const port = 3000;
-//Add Socket.IO as a dependency and require/instantiate it in your server 
-//defined as 'io' with the port  as an argument. 
-const io = require('socket.io').listen(port);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+server.listen(port);
 
-/* The first thing needing to be handled is listening for a new connection from the client. 
-  The on keyword does just that- listen for a specific event. 
-  It requires 2 arguments: a string containing the title of the event thats emitted, and a function with which the data is passed though. 
-  In the case of our connection listener, we use socket to define the data in the second argument. 
-  A socket is an individual client who is connected.
-  For listening for connections on our server
+let heapData;
+
+/* THE AETHER FRONT-END SERVER IS BOTH AN EXPRESS AND WBESOCKET SERVER
+THE FIRST THING ONE MUST TO DO IS ESTABLISH THE SOCKET CONNECTION
+ONCE YOU'VE TRIGGERED THE ON METHOD -- YOU'VE BEGIN LISTENING FOR A NEW CONNECTION
+
+THE ON KEYWORD JUST DOES THAT -- LISTENS FOR A SPECIFIC EVENT
+ON REQUIRES 2 ARGUMENTS: A STRING CONTAINING THE TITLE OF THE EVENT EMITTED,
+ANMD A FUNCTION WITH WHICH THE DATA IS PASSED THROUGH.
+
+IN THE CASE OF OUR CONNECTION LISTENER, 
+WE USE SOCKET TO DEFINE THE DATA IN THE SECOND ARGUMENT.
+
+  WHAT IS THE SOCKET? -- THE INDIVIDUAL CLIENT WHO IS CONNECTED
+  WEBSOCKETS USE EVENT EMITTERS -- THE RECEIVING END IS LOOKING FOR A STRING
+  IF BOTH/HOWEVER MANY PARTIES HAVE ACCESS TO THE SAME EVENT LISTENER 
+  THEY CAN LISTEN FOR AND BROADCAST MESSAGES 
+
 */
 
-io.on('connection', socket => {
-  console.log('connected:', socket.client.id);
+
+
+// AETHER'S WEBSOCKET SERVER ASSERTS THAT IT HAS A WEBSOCKET CONNECTION 
+// ANYONE ELSE THAT ALSO HAS A WEBSOCKET CONNECTION CAN NOW JOIN ON THAT SPECIFIC PORT
+io.on('connection', function(socket) {
+  // console.log('connected:', socket.client.id);
+  //REMEMBER THERE COULD BE MULTIPLE SOCKETS
+  // WE'RE LISTENING FOR A RESPONSE FROM TESTING SAMPLE APP
+  // AETHER BEGINS LISTENS FOR A ONE PARTICULAR EVENT CALLED SERVEREVENT
+  // IF DATA GETS EMITTED AT SERVEREVENT WE REASSIGN HEAP DATA CONTINOUSLY
   socket.on('serverEvent', function(data) {
-    console.log('new message from client:', data);
+    // console.log('new message from client:', data);
+    heapData = data;
   });
-  //
-  setInterval(function() {
-    //EMIT THE MESSAGE BEING SENT TO THE SERVER 
-    //Emits an event to the socket identified by the string name. Any other parameters can be included. All serializable datastructures are supported, including Buffer.
-    socket.emit('clientEvent', Math.random());
-    console.log('message sent to the clients');
+  // SETINTERVAL CONTAINS TRIGGERS THE CLIENT-EVENT
+  // THIS IS THE FIRST REAL EVENT THAT IS HAPPENING, OTHERWISE
+  // IT'S JUST AN OPEN CONNECTION THAT DOES NOTHING
+  setInterval(function() { //TRIGGERS THE CLIENT- EVENT,
+
+    // EMIT IS BROADCASTING SAYING I HAVE A CLIENTEVENT!
+    // TESTING SAMPLE APP IS SAYING HEY! I AM CLIENT EVENT AND I HAVE SOMETHING TO SAY
+    socket.emit('clientEvent', 'update snapshot request');
+    // console.log('message sent to the clients');
   }, 3000);
 });
 
+
+app.use(express.static('/assets/'));
+
+app.get('/getdata', (req, res) => {
+  console.log("AT /GETDATA ENDPOINT", heapData);
+  res.status(200).send(heapData);
+})
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/build/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/bundle.js'));
+});
+app.get('/stylesheet.css', (req, res) => {
+  res.sendFile(path.join(__dirname, '../stylesheet.css'));
+});
