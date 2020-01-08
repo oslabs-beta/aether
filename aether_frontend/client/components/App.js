@@ -9,7 +9,10 @@ function App() {
 
   function getData() {
     fetch('/getdata')
-    .then(res => res.json())
+    // .then(res => {
+    //   console.log
+    // }
+    //   // res.json())
     .then(res => {
       setHeapData(res);
       })
@@ -22,7 +25,7 @@ function App() {
   return (
     <div>
       <Header />
-      <LineChart />
+      <LineChart heapData={getHeapData}/>
       <BubbleChartBlock heapData={getHeapData}/>
     </div>
   )
