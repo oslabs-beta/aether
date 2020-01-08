@@ -22,7 +22,7 @@ function App() {
   return (
     <div>
       <Header />
-      <LineChart />
+      <LineChart heapData={getHeapData}/>
       <BubbleChartBlock heapData={getHeapData}/>
     </div>
   )
