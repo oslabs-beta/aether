@@ -23,7 +23,10 @@ function takeSnapShot(input) {
     const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
     const snapshot = parser.parse(snapshotFile);
     // console.log(snapshot);
+    // total for total memory size
     let selfSizeTotal = 0;
+    // array for bubble chart
+    const bubblesArr = [];
     const snapshotArray = Object.keys(snapshot.nodes);
 
     // return selfSizeTotal;
@@ -36,16 +39,25 @@ function takeSnapShot(input) {
     for (let i = 0; i < snapshotArray.length; i += 1) {
       const node = snapshot.nodes[i];
       selfSizeTotal += node.self_size;
+      if (node.self_size >= 100) {
+        bubblesArr.push({
+          name: node.name,
+          size: node.self_size,
+        });
+      }
     }
-    console.log(selfSizeTotal);
-    input.input = JSON.stringify(selfSizeTotal);
+    console.log(bubblesArr.length);
+    input.input = JSON.stringify({
+      total: selfSizeTotal,
+      bubbles: bubblesArr,
+    });
     // GIVE THE INPUT OBJECT WE PASSED IN A PROPERTY CALLED INPUT
     // THAT INPUT PROPERTY GETS JSON STRINGIFIED AS THE RESULT OF WHAT PARNSEDSNAPSHOT RETURNS
+    fs.unlink(filename, (err) => {
+      if (err) throw err;
+      console.log('succesfully deleted', filename);
+    });
   });
-  // fs.unlink(filename, (err) => {
-  //   if (err) throw err;
-  //   console.log('succesfully deleted', filename);
-  // });
 }
 
 
