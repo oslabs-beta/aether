@@ -18,10 +18,8 @@ function takeSnapShot(input) {
 
   const filename = `../snapshot/${Date.now()}.heapsnapshot`;
   console.log('Filename: ', filename);
-  heapdump.writeSnapshot(path.resolve(__dirname, filename), function(
-    err,
-    filename
-  ) {
+  
+  heapdump.writeSnapshot(path.resolve(__dirname, filename), function(err, filename) {
     const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
     const snapshot = parser.parse(snapshotFile);
     const parsedSnapShot = [];
