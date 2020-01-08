@@ -9,10 +9,7 @@ function App() {
 
   function getData() {
     fetch('/getdata')
-    // .then(res => {
-    //   console.log
-    // }
-    //   // res.json())
+    .then(res => res.json())
     .then(res => {
       setHeapData(res);
       })

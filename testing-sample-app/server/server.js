@@ -41,8 +41,8 @@ function takeSnapShot(input) {
       selfSizeTotal += node.self_size;
       if (node.self_size >= 100) {
         bubblesArr.push({
-          name: node.name,
-          size: node.self_size,
+          label: node.name,
+          value: node.self_size,
         });
       }
     }

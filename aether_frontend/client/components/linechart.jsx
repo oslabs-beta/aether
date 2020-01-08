@@ -3,7 +3,7 @@ import {Line} from 'react-chartjs-2';
 import SiegeOpts from './siegeoptions.jsx'
 
 function LineChart(props) {
-    console.log("LINE CHARTS PROPS ARE", props)
+    console.log("LINE CHARTS PROPS ARE", props.heapData.total)
     return (
         <div>
             <SiegeOpts />
