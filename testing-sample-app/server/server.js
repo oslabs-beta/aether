@@ -5,9 +5,26 @@ const parser = require('heapsnapshot-parser');
 const io = require('socket.io-client');
 // REQUIRE THE DEPENDENCY AND CONNEC AT THE SPECIFIED PORT,
 // IF THE CONNECTION IS LOST ATTEMPT TO RECONNECT
-const socket = io.connect('http://localhost:3000/', {
+const socket = io.connect('http://localhost:9000/', {
   reconnection: true,
 });
+
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/build/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/bundle.js'));
+});
+app.get('/stylesheet.css', (req, res) => {
+  res.sendFile(path.join(__dirname, '../stylesheet.css'));
+});
+
+app.listen(PORT);
 
 function takeSnapShot(input) {
   /* THE ORIGINAL FUCNTION'S MIDDLEWARE AHS BEEN REFACTORED TO NOW TAKE IN AN INPUT THAT IS AN OBJECT
@@ -72,7 +89,7 @@ socket.on('connect', () => {
 
   const newData = {};
   takeSnapShot(newData);
-  console.log('connected to localhost:3000');
+ // console.log('connected to localhost:3000');
   // NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO
 
   // TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
