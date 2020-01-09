@@ -13,7 +13,7 @@ function BubbleChartBlock(props) {
   return (
     <BubbleChart
       graph={{
-        zoom: 1.1,
+        zoom: 1.0,
         offsetX: -0.05,
         offsetY: -0.01,
       }}
@@ -40,11 +40,7 @@ function BubbleChartBlock(props) {
         color: '#fff',
         weight: 'bold',
       }}
-      data={[
-        { label: 'CRM', value: 1 },
-        { label: 'API', value: 1 },
-        { label: 'Data', value: 1 },
-      ]}    
+      data={props.heapData}    
       />
   );
 }

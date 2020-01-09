@@ -4,7 +4,6 @@ import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
 function App() {
-  // const [pageDisplay, setDisplay] = useState(<p>LOADING</p>);
   const [getHeapData, setHeapData] = useState();
   const [getTotalData, setTotalData] = useState();
 
