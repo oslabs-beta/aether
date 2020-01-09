@@ -14,8 +14,8 @@ function BubbleChartBlock(props) {
     <BubbleChart
       graph={{
         zoom: 1.0,
-        offsetX: -0.05,
-        offsetY: -0.01,
+        // offsetX: -0.05,
+        // offsetY: -0.01,
       }}
       width={1000}
       height={800}
