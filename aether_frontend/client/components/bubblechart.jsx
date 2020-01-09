@@ -40,7 +40,12 @@ function BubbleChartBlock(props) {
         color: '#fff',
         weight: 'bold',
       }}
-    />
+      data={[
+        { label: 'CRM', value: 1 },
+        { label: 'API', value: 1 },
+        { label: 'Data', value: 1 },
+      ]}    
+      />
   );
 }
 

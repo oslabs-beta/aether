@@ -7,12 +7,16 @@ function App() {
   // const [pageDisplay, setDisplay] = useState(<p>LOADING</p>);
   const [getHeapData, setHeapData] = useState();
 
-  function getData() {
-    fetch('/getdata')
+   function getData() {
+     fetch('/getdata')
     .then(res => res.json())
     .then(res => {
       setHeapData(res);
+      // console.log("THE INITIAL LINE CHART DATA IS", res.total)
+      // console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       })
+
+
   }
 
   useEffect(() => {

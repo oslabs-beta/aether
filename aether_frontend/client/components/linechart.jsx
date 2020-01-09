@@ -3,7 +3,11 @@ import { Line } from 'react-chartjs-2';
 import SiegeOpts from './siegeoptions.jsx';
 
 function LineChart(props) {
-  console.log('LINE CHARTS PROPS ARE', props.heapData);
+  console.log('LINE CHARTS DATA IS', props.heapData);
+
+  const testObj = {...props.heapData}
+  console.log("this one:",testObj)
+
   return (
     <div>
       <SiegeOpts />
@@ -13,7 +17,7 @@ function LineChart(props) {
             labels: ['5000ms', '10000ms', '15000ms'],
             datasets: [{
               label: ['12/21 11:39am'],
-              data: [500, 700],
+              data: [props.heapData, 500, 700],
               borderColor: '#689E44',
               backgroundColor: '#689E44',
               fill: false,
