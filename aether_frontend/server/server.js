@@ -9,7 +9,6 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 server.listen(port);
-
 let heapData;
 
 /* THE AETHER FRONT-END SERVER IS BOTH AN EXPRESS AND WBESOCKET SERVER
@@ -71,4 +70,8 @@ app.get('/build/bundle.js', (req, res) => {
 });
 app.get('/stylesheet.css', (req, res) => {
   res.sendFile(path.join(__dirname, '../stylesheet.css'));
+});
+
+app.get('/assets/AetherLogo01.png', (req, res) => {
+  res.sendFile(path.join(__dirname, '../assets/AetherLogo01.png'));
 });
