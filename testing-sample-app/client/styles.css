@@ -11,7 +11,7 @@ body {
 	text-rendering: optimizelegibility;
 }
 
-ul {
+#accordion {
 	display: flex;
 	min-height: 100vh;
 	max-height: 100vh;
@@ -21,7 +21,7 @@ ul {
 	list-style-type: none;
 }
 
-li {
+.section {
 	flex: 1;
 	display: flex;
 	align-items: stretch;
@@ -31,28 +31,28 @@ li {
 	transition: all .5s ease;
 }
 
-li:hover {
+.section:hover {
 	background: #e53f2e;
 }
 
-li.active {
+.section.active {
 	flex: 5;
 	background: #fff;
 	cursor: default;
 }
 
-li.active h2 {
+.section.active h2 {
 	color: #E74C3C;
 }
 
-li.active .section-content {
+.section.active .section-content {
 	flex: 4;
 	opacity: 1;
 	transform: scaleX(1);
 	color: #E74C3C;
 }
 
-li .section-title {
+.section .section-title {
 	flex: 1;
 	display: flex;
 	align-items: center;
@@ -63,13 +63,13 @@ li .section-title {
 	color: white;
 }
 
-li .section-title h2 {
+.section .section-title h2 {
 	margin: 0;
 	transform: rotate(-90deg);
 	white-space: nowrap;
 }
 
-li .section-content {
+.section .section-content {
 	flex: 1;
 	display: flex;
 	align-items: center;
