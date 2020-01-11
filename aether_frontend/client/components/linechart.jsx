@@ -4,16 +4,24 @@ import DropDowns from './siegeoptions.jsx';
 
 function LineChart(props) {
   const [timeLabel, setTimeLabel] = useState([0, 5000])
-  // console.log('LINE CHARTS DATA IS', props.heapData);
+  const [dateLabel, setDateLabel] = useState()
+
+  useEffect(() => {
+    let currentDate = String(new Date(Date.now()))
+    currentDate = currentDate.slice(4, 25)
+    console.log("THE CURRENT DATA IS", currentDate)
+    setDateLabel(currentDate)
+  }, [])
 
   useEffect(() => {
     const lastTime = timeLabel[timeLabel.length - 1]
     const allLabels = timeLabel
     // console.log("ALLLABELS", allLabels)
-    console.log("LASTTIME", lastTime)
+    // console.log("LASTTIME", lastTime)
     setTimeLabel([...allLabels, lastTime + 5000])
     // console.log("TIMELABEL IS", timeLabel)
   }, [props.heapData])
+
 
   return (
     <div>
@@ -23,7 +31,7 @@ function LineChart(props) {
           data={{
             labels: [...timeLabel],
             datasets: [{
-              label: ['12/21 11:39am'],
+              label: [dateLabel],
               data: [0, ...props.heapData],
               borderColor: '#689E44',
               backgroundColor: '#689E44',
