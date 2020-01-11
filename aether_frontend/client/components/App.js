@@ -14,7 +14,8 @@ function App() {
     .then(res => res.json())
     .then(res => {
       setBubbleData(res.bubbles);
-      setTotalData([totalData].push(res.total))
+
+      setTotalData([...totalData, res.total])
       // console.log("THE INITIAL LINE CHART DATA IS", res.total)
       // console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       })
@@ -30,7 +31,6 @@ function App() {
     return function cleanup() {
       clearInterval(heapLoop);
     }
-    getData()
   }, [totalData])
 
   return (
