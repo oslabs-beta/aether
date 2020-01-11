@@ -3,7 +3,7 @@ import { Line } from 'react-chartjs-2';
 import SiegeOpts from './siegeoptions.jsx';
 
 function LineChart(props) {
-  console.log('LINE CHARTS DATA IS', typeof props.heapData);
+  console.log('LINE CHARTS DATA IS', props.heapData);
 
   const testObj = {...props.heapData}
   console.log("this one:",testObj)
