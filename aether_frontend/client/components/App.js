@@ -4,18 +4,19 @@ import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
 function App() {
-  const [getHeapData, setHeapData] = useState();
-  const [getTotalData, setTotalData] = useState();
+  const [bubbleData, setBubbleData] = useState();
+  //SET THE INITIAL STATE FOR TOTALDATA TO BE AN EMPTY ARRAY THAT WE PUSH INTO
+  const [totalData, setTotalData] = useState([]);
 
   
    function getData() {
      fetch('/getdata')
     .then(res => res.json())
     .then(res => {
-      setHeapData(res.bubbles);
-      setTotalData(res.total)
-      console.log("THE INITIAL LINE CHART DATA IS", res.total)
-      console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
+      setBubbleData(res.bubbles);
+      setTotalData([totalData].push(res.total))
+      // console.log("THE INITIAL LINE CHART DATA IS", res.total)
+      // console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       })
   }
 
@@ -30,13 +31,13 @@ function App() {
       clearInterval(heapLoop);
     }
     getData()
-  }, [getTotalData])
+  }, [totalData])
 
   return (
     <div>
       <Header />
-      <LineChart heapData={getTotalData}/>
-      <BubbleChartBlock heapData={getHeapData}/>
+      <LineChart heapData={totalData}/>
+      <BubbleChartBlock heapData={bubbleData}/>
     </div>
   )
 }
