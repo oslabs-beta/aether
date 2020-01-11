@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter, Route, Switch, Link, Redirect,
+} from 'react-router-dom';
 import Header from './header.jsx';
 import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
 function App() {
-  const [getHeapData, setHeapData] = useState();
-  const [getTotalData, setTotalData] = useState();
+  const [bubbleData, setBubbleData] = useState();
+  // SET THE INITIAL STATE FOR TOTALDATA TO BE AN EMPTY ARRAY THAT WE PUSH INTO
+  const [totalData, setTotalData] = useState([]);
 
 
   function getData() {
     fetch('/getdata')
       .then((res) => res.json())
       .then((res) => {
-        setHeapData(res.bubbles);
-        setTotalData(res.total);
-        console.log('THE INITIAL LINE CHART DATA IS', res.total);
-        console.log('THE INITIAL LINE CHART DATA IS', res.bubbles);
+        setBubbleData(res.bubbles);
+
+        setTotalData([...totalData, res.total]);
+      // console.log("THE INITIAL LINE CHART DATA IS", res.total)
+      // console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       });
   }
 
@@ -29,15 +34,21 @@ function App() {
     return function cleanup() {
       clearInterval(heapLoop);
     };
-    getData();
-  }, [getTotalData]);
+  }, [totalData]);
 
   return (
-    <div>
-      <Header />
-      <LineChart heapData={getTotalData} />
-      <BubbleChartBlock heapData={getHeapData} />
-    </div>
+    <BrowserRouter>
+      <div>
+        <Header />
+        <Link to="/lineChart">Memory Usage Over Time</Link>
+        <Link to="/bubbleChart">Nodes by Size</Link>
+        <Switch>
+          <Route exact path="/"><Redirect to="/lineChart" /></Route>
+          <Route path="/lineChart"><LineChart heapData={totalData} /></Route>
+          <Route path="/bubbleChart"><BubbleChartBlock heapData={bubbleData} /></Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 

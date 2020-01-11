@@ -8,7 +8,7 @@ function BubbleChartBlock(props) {
   // legendClick = (label) =>{
   //     console.log("Customer legend click func")
   //   }
-  console.log('BUBBLE CHART DATA', props.heapData);
+  // console.log('BUBBLE CHART DATA', props.heapData);
 
   return (
     <BubbleChart
