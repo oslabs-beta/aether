@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from 'react';
 
-function Section() {
+function Section(props) {
 
     return (
-        <div className="section">
+        <div className="section" id={props.id} onClick={() => props.click(props.id)}>
             <div className="section-title">
                 <h2>Section 1</h2>
             </div>

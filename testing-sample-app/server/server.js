@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 app.get('/build/bundle.js', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/bundle.js'));
 });
-app.get('/stylesheet.css', (req, res) => {
-  res.sendFile(path.join(__dirname, '../stylesheet.css'));
+app.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/styles.css'));
 });
 
 app.listen(PORT);
