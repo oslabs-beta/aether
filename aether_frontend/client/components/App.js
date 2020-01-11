@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './header.jsx';
 import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
+import {BrowserRouter, Route, Switch, Link, Redirect} from 'react-router-dom';
 
 function App() {
   const [bubbleData, setBubbleData] = useState();
@@ -34,11 +35,18 @@ function App() {
   }, [totalData])
 
   return (
-    <div>
-      <Header />
-      <LineChart heapData={totalData}/>
-      <BubbleChartBlock heapData={bubbleData}/>
-    </div>
+    <BrowserRouter>
+      <div>
+        <Header/>
+        <Link to ="/lineChart">Memory Usage Over Time</Link>
+        <Link to ="/bubbleChart">Nodes by Size</Link>
+        <Switch>
+            <Route exact path = "/"><Redirect to ="/lineChart"></Redirect></Route>
+            <Route path ="/lineChart"><LineChart heapData={totalData}/></Route>
+            <Route path ="/bubbleChart"><BubbleChartBlock heapData={bubbleData}/></Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
   )
 }
 
