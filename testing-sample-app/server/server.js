@@ -10,6 +10,7 @@ const socket = io.connect('http://localhost:9000/', {
 });
 
 const express = require('express');
+
 const app = express();
 const PORT = 3000;
 
@@ -54,19 +55,44 @@ function takeSnapShot(input) {
     // return the total
 
     for (let i = 0; i < snapshotArray.length; i += 1) {
+    // for (let i = 0; i < 11; i += 1) {
+      let totalDependentObjSize = 0;
       const node = snapshot.nodes[i];
-      selfSizeTotal += node.self_size;
+      // console.log(node.references);
+      // for every node of self size that is greater than 500
+      if (node.self_size >= 500) {
+      // array of edges
+        for (let j = 0; j < node.references.length; j += 1) {
+          if (node.references[j].toNode.edge_count === 1) {
+          // add the dependent sizes
+            // console.log('SELF SIZE OF EDGE IS', node.references[j].toNode.self_size);
+            totalDependentObjSize += node.references[j].toNode.self_size;
+          }
+        }
+        // add the size of the node itself to the dependent sizes
+        // the current node size plus its retained size --- this is what we want to return
+        totalDependentObjSize += node.self_size;
+
+        selfSizeTotal += node.self_size;
+        // This is the size of memory that is freed
+        // once the object itself is deleted along with its dependent objects that were made unreachable from GC roots.
+      }
+      console.log('NODE SELF SIZE PLUS DEPENDENTS', totalDependentObjSize);
+
       if (node.self_size >= 500) {
         bubblesArr.push({
           label: node.type,
           value: node.self_size,
+          retained_size: totalDependentObjSize,
         });
+        console.log('BUBBLES ARRAY IS', bubblesArr);
       }
     }
-    console.log(bubblesArr.length);
+    // console.log(bubblesArr.length);
     input.input = JSON.stringify({
       total: selfSizeTotal,
       bubbles: bubblesArr,
+      // total_dep_size: totalDependentObjSize,
     });
     // GIVE THE INPUT OBJECT WE PASSED IN A PROPERTY CALLED INPUT
     // THAT INPUT PROPERTY GETS JSON STRINGIFIED AS THE RESULT OF WHAT PARNSEDSNAPSHOT RETURNS
@@ -89,7 +115,7 @@ socket.on('connect', () => {
 
   const newData = {};
   takeSnapShot(newData);
- // console.log('connected to localhost:3000');
+  // console.log('connected to localhost:3000');
   // NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO
 
   // TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
