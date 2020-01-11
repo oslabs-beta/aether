@@ -56,9 +56,9 @@ function takeSnapShot(input) {
     for (let i = 0; i < snapshotArray.length; i += 1) {
       const node = snapshot.nodes[i];
       selfSizeTotal += node.self_size;
-      if (node.self_size >= 100) {
+      if (node.self_size >= 500) {
         bubblesArr.push({
-          label: node.name,
+          label: node.type,
           value: node.self_size,
         });
       }

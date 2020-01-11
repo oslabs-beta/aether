@@ -4,15 +4,21 @@ import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
 function App() {
-  // const [pageDisplay, setDisplay] = useState(<p>LOADING</p>);
   const [getHeapData, setHeapData] = useState();
+  const [getTotalData, setTotalData] = useState();
 
-  function getData() {
-    fetch('/getdata')
+
+   function getData() {
+     fetch('/getdata')
     .then(res => res.json())
     .then(res => {
-      setHeapData(res);
+      setHeapData(res.bubbles);
+      setTotalData(res.total)
+      console.log("THE INITIAL LINE CHART DATA IS", res.total)
+      console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       })
+
+
   }
 
   useEffect(() => {
@@ -22,7 +28,7 @@ function App() {
   return (
     <div>
       <Header />
-      <LineChart heapData={getHeapData}/>
+      <LineChart heapData={getTotalData}/>
       <BubbleChartBlock heapData={getHeapData}/>
     </div>
   )

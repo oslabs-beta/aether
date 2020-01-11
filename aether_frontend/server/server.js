@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
   // WE'RE LISTENING FOR A RESPONSE FROM TESTING SAMPLE APP
   // AETHER BEGINS LISTENS FOR A ONE PARTICULAR EVENT CALLED SERVEREVENT
   // IF DATA GETS EMITTED AT SERVEREVENT WE REASSIGN HEAP DATA CONTINOUSLY
+  console.log("WEBSOCKET CONNECTION HAS BEEN ESTABLSIHED")
   socket.on('serverEvent', (data) => {
     // console.log('new message from client:', data);
     heapData = data;

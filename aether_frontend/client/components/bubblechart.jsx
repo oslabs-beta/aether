@@ -13,9 +13,9 @@ function BubbleChartBlock(props) {
   return (
     <BubbleChart
       graph={{
-        zoom: 1.1,
-        offsetX: -0.05,
-        offsetY: -0.01,
+        zoom: 1.0,
+        // offsetX: -0.05,
+        // offsetY: -0.01,
       }}
       width={1000}
       height={800}
@@ -40,7 +40,8 @@ function BubbleChartBlock(props) {
         color: '#fff',
         weight: 'bold',
       }}
-    />
+      data={props.heapData}    
+      />
   );
 }
 
