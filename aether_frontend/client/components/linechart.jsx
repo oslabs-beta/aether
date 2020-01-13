@@ -16,10 +16,7 @@ function LineChart(props) {
   useEffect(() => {
     const lastTime = timeLabel[timeLabel.length - 1]
     const allLabels = timeLabel
-    // console.log("ALLLABELS", allLabels)
-    // console.log("LASTTIME", lastTime)
     setTimeLabel([...allLabels, lastTime + 5000])
-    // console.log("TIMELABEL IS", timeLabel)
   }, [props.heapData])
 
 
@@ -32,19 +29,11 @@ function LineChart(props) {
             labels: [...timeLabel],
             datasets: [{
               label: [dateLabel],
-              data: [0, ...props.heapData],
+              data: [...props.heapData],
               borderColor: '#689E44',
               backgroundColor: '#689E44',
               fill: false,
             },
-            // {
-            //   label: ['12/21 11:45am'],
-            //   data: [300, 350, 450],
-            //   borderColor: '#F26622',
-            //   backgroundColor: '#F26622',
-            //   borderDash: [3, 3],
-            //   fill: false,
-            // }
           ],
           }}
           options={{

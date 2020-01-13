@@ -30,19 +30,22 @@ WE USE SOCKET TO DEFINE THE DATA IN THE SECOND ARGUMENT.
 */
 
 
-
+let counter = 0;
 // AETHER'S WEBSOCKET SERVER ASSERTS THAT IT HAS A WEBSOCKET CONNECTION
 // ANYONE ELSE THAT ALSO HAS A WEBSOCKET CONNECTION CAN NOW JOIN ON THAT SPECIFIC PORT
 io.on('connection', (socket) => {
+  counter +=1
   // console.log('connected:', socket.client.id);
   // REMEMBER THERE COULD BE MULTIPLE SOCKETS
   // WE'RE LISTENING FOR A RESPONSE FROM TESTING SAMPLE APP
   // AETHER BEGINS LISTENS FOR A ONE PARTICULAR EVENT CALLED SERVEREVENT
   // IF DATA GETS EMITTED AT SERVEREVENT WE REASSIGN HEAP DATA CONTINOUSLY
-  console.log('WEBSOCKET CONNECTION HAS BEEN ESTABLSIHED');
   socket.on('serverEvent', (data) => {
-    // console.log('new message from client:', data);
+    counter += 1
+    console.log("THE COUNTER IS", counter)
     heapData = data;
+    // let total = JSON.parse(heapData)
+    // console.log("THE DATA TOTAL FROM CLIENT IS", total.total);
   });
   // SETINTERVAL CONTAINS TRIGGERS THE CLIENT-EVENT
   // THIS IS THE FIRST REAL EVENT THAT IS HAPPENING, OTHERWISE
@@ -50,16 +53,15 @@ io.on('connection', (socket) => {
   // setInterval(() => { // TRIGGERS THE CLIENT- EVENT,
   // EMIT IS BROADCASTING SAYING I HAVE A CLIENTEVENT!
   // TESTING SAMPLE APP IS SAYING HEY! I AM CLIENT EVENT AND I HAVE SOMETHING TO SAY
-  socket.emit('clientEvent', 'update snapshot request');
-  // console.log('message sent to the clients');
-  // }, 3000);
+  setInterval(() => {
+    socket.emit('clientEvent', 'update snapshot request');
+  }, 5000);
 });
 
 
 app.use(express.static('/assets/'));
 
 app.get('/getdata', (req, res) => {
-  console.log('AT /GETDATA ENDPOINT', heapData);
   res.status(200).send(heapData);
 });
 
@@ -77,3 +79,4 @@ app.get('/stylesheet.css', (req, res) => {
 app.get('/assets/AetherLogo01.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../assets/AetherLogo01.png'));
 });
+

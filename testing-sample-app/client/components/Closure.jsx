@@ -37,9 +37,9 @@ const Closure = (props) => {
     var foo = [];
        function grow() {
            console.log('grow is running')
-           foo.push(new Array(1000000).join('foo'));
+           foo.push(new Array(1000000000).join('foo'));
            if (running)
-               setTimeout(grow, 1000);
+               setTimeout(grow, 1);
        }
        var running = true;
     

@@ -101,7 +101,7 @@ function takeSnapShot(input) {
     // THAT INPUT PROPERTY GETS JSON STRINGIFIED AS THE RESULT OF WHAT PARNSEDSNAPSHOT RETURNS
     fs.unlink(filename, (err) => {
       if (err) throw err;
-      console.log('succesfully deleted', filename);
+      // console.log('succesfully deleted', filename);
     });
   });
 }
@@ -116,7 +116,7 @@ socket.on('connect', () => {
   BY USING AN OBJECT, IT LIVES IN THE HEAP AND PERSISTS THE DATA ON BY ASSIGNING A PROPERTY ONTO THAT OBJECT
   */
 
-  const newData = {};
+  let newData = {};
   takeSnapShot(newData);
   // console.log('connected to localhost:3000');
   // NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO
@@ -124,8 +124,9 @@ socket.on('connect', () => {
   // TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
   // AND THIS EVENT LISTENER HAS A CALLBACK FUNCTION
   socket.on('clientEvent', (data) => {
-    // takeSnapShot(newData);
-    console.log('message from the server:', data);
+    newData = {};
+    takeSnapShot(newData);
+    // console.log('message from the server:', data);
     // AN EVENT IS EMITTED TO ALL CONNECTED CLIENTS -- CLIENTS CAN IDENTIFY THE EVENT BY THE INPUT STRING
 
     // ONCE WE'VE FOUND THE PARTICULAR EVENT WE WANTED TO CONNECT WE BROADCAST THAT EVENBT TO ANYONE ELSE
