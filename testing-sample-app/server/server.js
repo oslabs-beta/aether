@@ -35,16 +35,14 @@ function takeSnapShot(input) {
   */
 
   const filename = `../snapshot/${Date.now()}.heapsnapshot`;
-  // console.log('Filename: ', filename);
-
   heapdump.writeSnapshot(path.resolve(__dirname, filename), (err, filename) => {
     const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
     const snapshot = parser.parse(snapshotFile);
-    // console.log(snapshot);
     // total for total memory size
     let selfSizeTotal = 0;
     // array for bubble chart
     const bubblesArr = [];
+    const retainedArr = [];
     const snapshotArray = Object.keys(snapshot.nodes);
 
     // return selfSizeTotal;
@@ -77,22 +75,27 @@ function takeSnapShot(input) {
         // This is the size of memory that is freed
         // once the object itself is deleted along with its dependent objects that were made unreachable from GC roots.
       }
-      console.log('NODE SELF SIZE PLUS DEPENDENTS', totalDependentObjSize);
-
+      
       if (node.self_size >= 500) {
         bubblesArr.push({
           label: node.type,
           value: node.self_size,
           retained_size: totalDependentObjSize,
         });
-        console.log('BUBBLES ARRAY IS', bubblesArr);
+        retainedArr.push({
+          label: node.type,
+          value: totalDependentObjSize,
+          color: "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);})
+        })
       }
     }
-    // console.log(bubblesArr.length);
+
+
+
     input.input = JSON.stringify({
       total: selfSizeTotal,
       bubbles: bubblesArr,
-      // total_dep_size: totalDependentObjSize,
+      retainedSize: retainedArr
     });
     // GIVE THE INPUT OBJECT WE PASSED IN A PROPERTY CALLED INPUT
     // THAT INPUT PROPERTY GETS JSON STRINGIFIED AS THE RESULT OF WHAT PARNSEDSNAPSHOT RETURNS

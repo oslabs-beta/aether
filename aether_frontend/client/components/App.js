@@ -10,7 +10,7 @@ function App() {
   const [bubbleData, setBubbleData] = useState();
   // SET THE INITIAL STATE FOR TOTALDATA TO BE AN EMPTY ARRAY THAT WE PUSH INTO
   const [totalData, setTotalData] = useState([]);
-
+  const [retainedSizeData, setRetainedSizeData] = useState();
 
   function getData() {
     fetch('/getdata')
@@ -19,6 +19,8 @@ function App() {
         setBubbleData(res.bubbles);
 
         setTotalData([...totalData, res.total]);
+        setRetainedSizeData(res.retainedSize)
+        // console.log("THE RETAINED SIZE ARRAY IS", res.retainedSize)
       // console.log("THE INITIAL LINE CHART DATA IS", res.total)
       // console.log("THE INITIAL LINE CHART DATA IS", res.bubbles)
       });
@@ -41,12 +43,14 @@ function App() {
       <Header/>
       <nav>
         <Link to ="/lineChart">Memory Usage Over Time</Link>
-        <Link to ="/bubbleChart">Nodes by Size</Link>
+        <Link to ="/bubbleChart">Nodes by Self Size</Link>
+        <Link to ="/retainedSizeChart">Nodes by Retained Size</Link>
       </nav>
         <Switch>
           <Route exact path="/"><Redirect to="/lineChart" /></Route>
           <Route path="/lineChart"><LineChart heapData={totalData} /></Route>
           <Route path="/bubbleChart"><BubbleChartBlock heapData={bubbleData} /></Route>
+          <Route path="/retainedSizeChart"><BubbleChartBlock heapData={retainedSizeData} /></Route>
         </Switch>
     </BrowserRouter>
   );
