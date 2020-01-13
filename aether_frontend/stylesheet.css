@@ -11,6 +11,10 @@ label {
     padding-right: 1rem;
 }
 
+nav a {
+    padding: 1rem;
+}
+
 #logo {
     height: 75px;
     padding-right: 0.75rem;

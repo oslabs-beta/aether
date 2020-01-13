@@ -36,16 +36,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
-        <Header/>
+      <Header/>
+      <nav>
         <Link to ="/lineChart">Memory Usage Over Time</Link>
         <Link to ="/bubbleChart">Nodes by Size</Link>
+      </nav>
         <Switch>
             <Route exact path = "/"><Redirect to ="/lineChart"></Redirect></Route>
             <Route path ="/lineChart"><LineChart heapData={totalData}/></Route>
             <Route path ="/bubbleChart"><BubbleChartBlock heapData={bubbleData}/></Route>
         </Switch>
-      </div>
     </BrowserRouter>
   )
 }
