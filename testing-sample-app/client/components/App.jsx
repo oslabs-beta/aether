@@ -1,9 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import Closure from './Closure.jsx'
 import Section from './Section.jsx'
+import Content from './content.js'
 
 function App() {
 const [openPane, setPane] = useState('Sec4')
+
 
 function openSection(section) {
   //if active section is not clicked section
@@ -22,7 +24,8 @@ function openSection(section) {
 // TODO Need to also dynamically add data to each section 
 let sectionArr = []
 for (let i = 0; i < 3; i++) {
-  sectionArr.push(<Section id={`Sec${i}`} click={openSection}/>)
+  let section = `section${i}`;
+  sectionArr.push(<Section id={`Sec${i}`} click={openSection} content={Content[section]}/>)
 }
 
 //left closure hard-coded in for now but it should be dynamically generated with the others
