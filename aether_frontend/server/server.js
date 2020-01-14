@@ -5,7 +5,6 @@ const port = 9000;
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 server.listen(port);
-
 let heapData;
 let socketConnection;
 
