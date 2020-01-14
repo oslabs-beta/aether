@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter, Route, Switch, Link, Redirect,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link, Redirect} from 'react-router-dom';
 import Header from './header.jsx';
 import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
+/* The constant variables create state. The first variable stores data for the bubbleChart and setBubbleData, 
+updates state for bubbleData. The same state management logic applies to totalData and retainedSizeData. 
+useState is pulled in from React to know that it's a piece of state.
+*/
+
 function App() {
   const [bubbleData, setBubbleData] = useState();
-  // SET THE INITIAL STATE FOR TOTALDATA TO BE AN EMPTY ARRAY THAT WE PUSH INTO
   const [totalData, setTotalData] = useState([]);
   const [retainedSizeData, setRetainedSizeData] = useState();
+
+
+
+/* Makes a call to the getData endpoint. When we are creating the new total data array, we are destructuring our old totalData array, 
+the reason we do it in this manner is that we can't directly manipulate state, we are just adding onto state.
+*/
 
   function getData() {
     fetch('/getdata')
@@ -21,17 +29,20 @@ function App() {
       setRetainedSizeData(res.retainedSize)
     });
   }
-  // RUNS THE SET INTERVAL ONCE EVERYTIME THE SNAPSHOT IS UPDATED
-  // EVERYTIME YOU UPDATE HEAPDATA IT TRIGGERS THE USE EFFECT, LIKE COMPONENT DID MOUNT
-  // THEN IT REMOVES THE SET INTERVAL RIGHT AFTER IT RUNS, AND APPLIES IT ALL OVER AGAIN
-  // RATIONALE IS DUE TO IT OTHERWISE STACKING ITSELF, FIRST IT WILL RUN ONE VERSION OF THE FUNCTION
-  // SECOND TIME IT WILL RUN TWO VERSIONS OF SET INTERVAL AND NO LONGER WORKS THE WAY YOU INTENDED
+
+  /* useEffect is the React Hook's replacement for component lifecycle aka componentDidMount. This takes in two argument, one is an anonymous function. It creates a variable called heapLoop, that triggers getData to run every 5 seconds. Upon that completing we are clearing the interval, this is the equivalent of setTimeOut. useEffect takes in a second parameter, called totalData, and it will only run when totalData changes. This could have been any one of our getData state management functions. 
+  */
+
   useEffect(() => {
     const heapLoop = setInterval(() => { getData(); }, 5000);
     return function cleanup() {
       clearInterval(heapLoop);
     };
   }, [totalData]);
+
+/* When using React-Router clicking on any specific endpoint, will link to inner state pages. Mainly relatred to page state management. We pass through data through props. 
+TODOS -- fix endpoints.
+*/
 
   return (
     <BrowserRouter>

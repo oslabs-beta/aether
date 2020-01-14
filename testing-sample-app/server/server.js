@@ -27,12 +27,10 @@ app.get('/styles.css', (req, res) => {
 
 app.listen(PORT);
 
+/* */
+
 function takeSnapShot(input) {
-  /* THE ORIGINAL FUCNTION'S MIDDLEWARE AHS BEEN REFACTORED TO NOW TAKE IN AN INPUT THAT IS AN OBJECT
-  IF WE PASS IN INPUT AS AN OBJECT AND GIVE IT A PROPERTY
-  WE PASS IT BY REFERENCE AND HENCE IT EXISTS OUTSIDE OF THE FUNCTION
-  OTHERWISE IT WOULD NOT PERSIST AND BE UNDEFINED
-  */
+
   const filename = `../snapshot/${Date.now()}.heapsnapshot`;
   heapdump.writeSnapshot(path.resolve(__dirname, filename), (err, filename) => {
     const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
@@ -96,32 +94,23 @@ function takeSnapShot(input) {
     // THAT INPUT PROPERTY GETS JSON STRINGIFIED AS THE RESULT OF WHAT PARNSEDSNAPSHOT RETURNS
     fs.unlink(filename, (err) => {
       if (err) throw err;
-      // console.log('succesfully deleted', filename);
     });
   });
 }
 
 
-// ESTABLISHES AND CONNECT ON YOUR SOCKET CONNECTION
-// JUST BEFORE THE CONNECTION IS ESTABLISHED HERE, IO.ON HAS BEEN TRIGGERED ON AETHER'S SERVER -- 33
+/* Use the WebSocket to establish a connection at the specific port, connecting to Aether. 
+The Testing-Sample-App starts listens for an event called 'clientEvent.' The client event then gets triggered from Aether. 
+this takes in a callback function and now that it's begun to listen it can respond via the next event. 
+The Testing Sample App provides snapshot data via the 'serverEvent.' 
+We use the emit function to broadcast new data at the specific event. */
+
 socket.on('connect', () => {
-  /*
-  WE CREATED AN EMPTY CONTAINER OBJECT THAT WILL HOLD OUR PARSEDSNAPSHOT DATA.
-  IF WE SIMPLY USED A VARIABLE -- THEN THE VARIABLE WOULD NOT EXIST OUTSIDE THE FUNCTION'S EXECUTION CONTEXT
-  BY USING AN OBJECT, IT LIVES IN THE HEAP AND PERSISTS THE DATA ON BY ASSIGNING A PROPERTY ONTO THAT OBJECT
-  */
   let newData = {};
   takeSnapShot(newData);
-  // NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO
-  // TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
-  // AND THIS EVENT LISTENER HAS A CALLBACK FUNCTION
   socket.on('clientEvent', (data) => {
     newData = {};
     takeSnapShot(newData);
-    // console.log('message from the server:', data);
-    // AN EVENT IS EMITTED TO ALL CONNECTED CLIENTS -- CLIENTS CAN IDENTIFY THE EVENT BY THE INPUT STRING
-    // ONCE WE'VE FOUND THE PARTICULAR EVENT WE WANTED TO CONNECT WE BROADCAST THAT EVENBT TO ANYONE ELSE
-    // USING OUR SOCKET CONNECTION AND LISTENING TO THE SAME EVENT
     socket.emit('serverEvent', newData.input);
   });
 });

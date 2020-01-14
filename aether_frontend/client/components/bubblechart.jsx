@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import BubbleChart from '@weknow/react-bubble-chart-d3';
-
+//This child component accesses it's data via heapData on props, which contains it's bubbleData.
 function BubbleChartBlock(props) {
-  // bubbleClick = (label) =>{
-  //     console.log("Custom bubble click func")
-  //   }
-  // legendClick = (label) =>{
-  //     console.log("Customer legend click func")
-  //   }
-  // console.log('BUBBLE CHART DATA', props.heapData);
-
   return (
     <BubbleChart
       graph={{
         zoom: 1.0,
-        // offsetX: -0.05,
-        // offsetY: -0.01,
       }}
       width={1000}
       height={800}
@@ -44,5 +34,4 @@ function BubbleChartBlock(props) {
       />
   );
 }
-
 export default BubbleChartBlock;

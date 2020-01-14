@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
+//! Not currently in use
 
 function SeigeOpts() {
-
     return (
         <div className="options">
             <div>
@@ -34,6 +33,7 @@ function SeigeOpts() {
             </div>
         </div>
     )
+    
 }
 
 export default SeigeOpts;
