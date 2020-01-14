@@ -1,4 +1,4 @@
-STARTS HERE Node {
+Node = {
   type: 'synthetic',
   name: '(GC roots)',
   id: 3,
