@@ -1,5 +1,5 @@
 const path = require('path');
-const aether = require('../../aether_frontend/server/takeSnapShot.js');
+const aether = require('../../aether/server/takeSnapShot.js');
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -18,5 +18,3 @@ app.get('/styles.css', (req, res) => {
 });
 
 app.listen(PORT);
-
-

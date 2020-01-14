@@ -14,8 +14,6 @@ function App() {
   const [totalData, setTotalData] = useState([]);
   const [retainedSizeData, setRetainedSizeData] = useState();
 
-
-
 /* Makes a call to the getData endpoint. When we are creating the new total data array, we are destructuring our old totalData array, 
 the reason we do it in this manner is that we can't directly manipulate state, we are just adding onto state.
 */

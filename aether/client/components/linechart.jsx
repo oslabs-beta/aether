@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import DropDowns from './siegeoptions.jsx';
-
 
 function LineChart(props) {
-  /* The Chart.js library uses two things -- the timeLabel, defaulting to 0 and 5000 milliseconds. This is how the chart builts out it's first time render. The date label is dynamically set and reflects the current time the user is accessing the app.
+
+  /* The Chart.js library uses two things -- the timeLabel, defaulting to 0 and 5000 milliseconds. 
+     This is how the chart builts out it's first time render. The date label is dynamically set and reflects the current time the user is accessing the app.
   */
 
   const [timeLabel, setTimeLabel] = useState([0, 5000])

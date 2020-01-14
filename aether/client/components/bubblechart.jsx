@@ -1,6 +1,8 @@
 import React from 'react';
 import BubbleChart from '@weknow/react-bubble-chart-d3';
+
 //This child component accesses it's data via heapData on props, which contains it's bubbleData.
+
 function BubbleChartBlock(props) {
   return (
     <BubbleChart
@@ -9,9 +11,9 @@ function BubbleChartBlock(props) {
       }}
       width={1000}
       height={800}
-      padding={0} // optional value, number that set the padding between bubbles
-      showLegend // optional value, pass false to disable the legend.
-      legendPercentage={20} // number that represent the % of with that legend going to use.
+      padding={0} 
+      showLegend 
+      legendPercentage={20} 
       legendFont={{
         family: 'Arial',
         size: 12,

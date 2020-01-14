@@ -7,11 +7,8 @@ const socket = io.connect('http://localhost:9000/', {
   reconnection: true,
 });
 
-/* Use the WebSocket to establish a connection at the specific port, connecting to Aether. 
-The Testing-Sample-App starts listens for an event called 'clientEvent.' The client event then gets triggered from Aether. 
-this takes in a callback function and now that it's begun to listen it can respond via the next event. 
-The Testing Sample App provides snapshot data via the 'serverEvent.' 
-We use the emit function to broadcast new data at the specific event. */
+// Primary algorithm that takes, parses and deletes snapshots
+// TODO Refactor function to use Single Responsibility Principle
 
 function takeSnapShot(input) {
     const filename = `../snapshot/${Date.now()}.heapsnapshot`;
@@ -70,9 +67,13 @@ function takeSnapShot(input) {
         });
     }
     
-    
+    /* Use the WebSocket to establish a connection at the specific port, connecting to Aether. 
+    The Testing-Sample-App starts listens for an event called 'clientEvent.' The client event then gets triggered from Aether. 
+    this takes in a callback function and now that it's begun to listen it can respond via the next event. 
+    The Testing Sample App provides snapshot data via the 'serverEvent.' 
+    We use the emit function to broadcast new data at the specific event. */
+
     function start() {
-        
         socket.on('connect', () => {
           let newData = {};
           takeSnapShot(newData);
@@ -83,7 +84,6 @@ function takeSnapShot(input) {
           });
         });
     }    
-
 
     module.exports = {
         takeSnapShot,

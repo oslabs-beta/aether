@@ -3,10 +3,12 @@ const app = express();
 const path = require('path');
 const port = 9000;
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
 server.listen(port);
-let heapData;
+const io = require('socket.io')(server);
 let socketConnection;
+
+// Initiating a global variable to be stored and passed into front-end
+let heapData;
 
 /* Aether established a WebSocket connection and anyone else that has a sockt can join at the specific port.
 It's an open channell of communication where you can listen and emit based on the two specified events.
@@ -47,4 +49,3 @@ app.get('/stylesheet.css', (req, res) => {
 app.get('/assets/AetherLogo01.png', (req, res) => {
   res.sendFile(path.join(__dirname, '../assets/AetherLogo01.png'));
 });
-
