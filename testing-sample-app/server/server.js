@@ -33,7 +33,6 @@ function takeSnapShot(input) {
   WE PASS IT BY REFERENCE AND HENCE IT EXISTS OUTSIDE OF THE FUNCTION
   OTHERWISE IT WOULD NOT PERSIST AND BE UNDEFINED
   */
-
   const filename = `../snapshot/${Date.now()}.heapsnapshot`;
   heapdump.writeSnapshot(path.resolve(__dirname, filename), (err, filename) => {
     const snapshotFile = fs.readFileSync(filename, { encoding: 'utf-8' });
@@ -70,7 +69,6 @@ function takeSnapShot(input) {
         // add the size of the node itself to the dependent sizes
         // the current node size plus its retained size --- this is what we want to return
         totalDependentObjSize += node.self_size;
-
         selfSizeTotal += node.self_size;
         // This is the size of memory that is freed
         // once the object itself is deleted along with its dependent objects that were made unreachable from GC roots.
@@ -89,9 +87,6 @@ function takeSnapShot(input) {
         })
       }
     }
-
-
-
     input.input = JSON.stringify({
       total: selfSizeTotal,
       bubbles: bubblesArr,
@@ -115,12 +110,9 @@ socket.on('connect', () => {
   IF WE SIMPLY USED A VARIABLE -- THEN THE VARIABLE WOULD NOT EXIST OUTSIDE THE FUNCTION'S EXECUTION CONTEXT
   BY USING AN OBJECT, IT LIVES IN THE HEAP AND PERSISTS THE DATA ON BY ASSIGNING A PROPERTY ONTO THAT OBJECT
   */
-
   let newData = {};
   takeSnapShot(newData);
-  // console.log('connected to localhost:3000');
   // NEED TO KNOW WHAT PARTICULAR EVENT TO LISTEN TO
-
   // TESTING SAMPLE GETS THE EVENT LISTENER CLIENTEVENT TRIGGERED FROM AETHER-FRONTEND
   // AND THIS EVENT LISTENER HAS A CALLBACK FUNCTION
   socket.on('clientEvent', (data) => {
@@ -128,7 +120,6 @@ socket.on('connect', () => {
     takeSnapShot(newData);
     // console.log('message from the server:', data);
     // AN EVENT IS EMITTED TO ALL CONNECTED CLIENTS -- CLIENTS CAN IDENTIFY THE EVENT BY THE INPUT STRING
-
     // ONCE WE'VE FOUND THE PARTICULAR EVENT WE WANTED TO CONNECT WE BROADCAST THAT EVENBT TO ANYONE ELSE
     // USING OUR SOCKET CONNECTION AND LISTENING TO THE SAME EVENT
     socket.emit('serverEvent', newData.input);

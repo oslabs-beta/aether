@@ -6,12 +6,6 @@ import Header from './header.jsx';
 import LineChart from './linechart.jsx';
 import BubbleChartBlock from './bubblechart.jsx';
 
-const io = require('socket.io-client');
-const socket = io.connect('http://localhost:9000/', {
-  reconnection: true,
-});
-
-
 function App() {
   const [bubbleData, setBubbleData] = useState();
   // SET THE INITIAL STATE FOR TOTALDATA TO BE AN EMPTY ARRAY THAT WE PUSH INTO
@@ -27,8 +21,6 @@ function App() {
       setRetainedSizeData(res.retainedSize)
     });
   }
-  
-  socket.emit('clientEvent', "update me")
   // RUNS THE SET INTERVAL ONCE EVERYTIME THE SNAPSHOT IS UPDATED
   // EVERYTIME YOU UPDATE HEAPDATA IT TRIGGERS THE USE EFFECT, LIKE COMPONENT DID MOUNT
   // THEN IT REMOVES THE SET INTERVAL RIGHT AFTER IT RUNS, AND APPLIES IT ALL OVER AGAIN
