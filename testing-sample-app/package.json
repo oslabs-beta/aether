@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "aether": "node node_modules/aether_memory/server/server.js & node server/server.js",
     "start": "node server/server.js",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack-dev-server --open & nodemon server/server.js"
@@ -14,6 +15,7 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
+    "aether_memory": "^1.0.12",
     "babel-loader": "^8.0.6",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

@@ -1,10 +1,12 @@
 const path = require('path');
-const aether = require('../../aether/server/takeSnapShot.js');
+const aether = require('aether_memory');
 const express = require('express');
+
 const app = express();
 const PORT = 3000;
 
-aether.start()
+aether.start();
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));

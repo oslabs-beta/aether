@@ -1,8 +1,8 @@
 {
-  "name": "aether",
-  "version": "1.0.0",
+  "name": "aether_memory",
+  "version": "1.0.15",
   "description": "All-in-One Memory Leak Testing Solution",
-  "main": "index.js",
+  "main": "server/takeSnapShot.js",
   "scripts": {
     "start": "node server/server.js",
     "build": "NODE_ENV=production webpack",
@@ -13,17 +13,19 @@
     "url": "git+https://github.com/oslabs-beta/aether.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sejan, Vessy, Anna, Denis",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/oslabs-beta/aether/issues"
   },
   "homepage": "https://github.com/oslabs-beta/aether#readme",
   "dependencies": {
+    "@babel/cli": "^7.8.3",
     "@weknow/react-bubble-chart-d3": "^1.0.12",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",
     "express": "^4.17.1",
+    "heapdump": "^0.3.15",
     "heapsnapshot-parser": "^0.1.0",
     "path": "^0.12.7",
     "react": "^16.2.0",
@@ -38,6 +40,8 @@
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "cross-env": "^6.0.3",
     "webpack": "^4.41.4",
