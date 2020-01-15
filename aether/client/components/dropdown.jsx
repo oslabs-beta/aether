@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+//! Not currently in use
 
-
-function SeigeOpts() {
-
+function DropDown() {
     return (
         <div className="options">
             <div>
@@ -36,4 +35,4 @@ function SeigeOpts() {
     )
 }
 
-export default SeigeOpts;
+export default DropDown;

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Closure from './Closure.jsx'
 import Section from './Section.jsx'
 import Content from './content.js'
-import DomTree from './DetachedDOMTree.jsx'
 
 function App() {
   const [openPane, setPane] = useState('none')
