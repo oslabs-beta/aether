@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #5F6063
+}
+
+h1 {
+    color: #5F6063;
+}
+
+label {
+    padding-right: 1rem;
+}
+
+select {
+    color: #5F6063;
+    background-color: white;
+    padding: 5px;
+    box-shadow: 1px 1px 1px 0px #d4d4d4;
+}
+
+nav a {
+    padding: 1rem;
+}
+
+#logo {
+    height: 75px;
+    padding-right: 0.75rem;
+}
+
+#logotxt {
+    display: flex;
+    align-items: center;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+#linechart {
+    padding-top: 1rem
+}
+
+.options {
+    display: flex;
+    padding: 0 1rem;
+}
+
+
+.options > div:nth-child(n + 2) {
+    margin-left: 4rem;
+}
