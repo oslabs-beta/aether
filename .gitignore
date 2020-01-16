@@ -103,6 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# DS_Store file
+.DS_Store
+
 # ignore snapshots
 .snapshot/*
 !.gitkeep
