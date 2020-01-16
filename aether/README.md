@@ -44,8 +44,26 @@ npm install aether_memory
 ---
 ## Usage
 
-- In your server invoke  `aether.start()`
+- Add this script to your package.json with specifing how to start your server: 
+```
+"aether": "node node_modules/aether_memory/server/server.js & <START YOUR SERVER>",
+```
+```
+FOR EXAMPLE: 
+
+"aether": "node node_modules/aether_memory/server/server.js & node server/server.js",
+```
+- In your server file require and invoke aether by adding these 2 lines:
+```
+const aether = require('aether_memory');
+aether.start();
+```
+- In your terminal run:
+```
+npm run aether
+```
 - Go to your [localhost:9000](http://localhost:9000/)
+
 - Observe the live memory usage
 
 ---
