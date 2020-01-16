@@ -76,6 +76,11 @@ npm run aether
 
 We are always looking to improve. For major changes, please open an issue first to discuss what you would like to change, pull requests are welcome.
 
+Currently on our to-do list:
+ - Updates to the retained-size algorithm to account for multiple nodes being attached to a single node
+ - Fix a bug where React Router does not deep-link to a chart
+ - Expand data on hover for each displayed node in bubble charts
+ 
 ---
 ## Authors
 
