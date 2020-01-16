@@ -1,5 +1,5 @@
 <p>
-  <img width="250px" src="./assets/AetherLogo01.png" />
+  <img width="250px" src="./aether/assets/AetherLogo01.png" />
 </p>
 
 # aether
@@ -13,13 +13,13 @@ After installing the `aether_memory` npm package to your server, you can observe
 ## Features
 
 <p>
-  <img width="500px" src="./assets/ChartExample.png" />
+  <img width="500px" src="./aether/assets/ChartExample.png" />
 </p>
 
 - Presenting total memory usage over time in a chart format with live updates every 5 seconds, so you can analyze the overall health of your application's memory.
 
 <p>
-  <img width="500px" src="./assets/BubbleChartExample.png" />
+  <img width="500px" src="./aether/assets/BubbleChartExample.png" />
 </p>
 
 - Visualizing the self size and retained size of arrays, strings, functions, and objects in your memory heap as a bubble chart to quickly see what is allocated the largest amount of memory.
