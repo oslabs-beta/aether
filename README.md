@@ -26,7 +26,7 @@ After installing the `aether_memory` npm package to your server, you can observe
 ---
 ## How it works
 
-`aether_memory` uses `node-heapdump` to take snapshots of the heap with 5 seconds intervals. The V8 Engine triggers garbagage collection before each snapshot. The physical file is created in 'snapshot' folder and parsed through. Afterwards, the data is analyzed, displayed, and the file gets deleted before the next snapshot is taken, minimizing its own memory footprint and avoiding false results. 
+`aether_memory` uses `node-heapdump` to take snapshots of the heap with 5 seconds intervals. The V8 Engine triggers garbage collection before each snapshot. The physical file is created in 'snapshot' folder and parsed through. Afterwards, the data is analyzed, displayed, and the file gets deleted before the next snapshot is taken, minimizing its own memory footprint and avoiding false results. 
 
 ---
 ## Installation
